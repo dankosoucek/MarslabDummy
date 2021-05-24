@@ -1,0 +1,48 @@
+<!doctype html>
+<head>
+  <title>Marslab Dummy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/webjars/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="/webjars/vue/vue.js"></script>
+  <script src="/webjars/axios/dist/axios.js"></script>
+</head>
+<body>
+<div class="container" >
+  <div id="contents" v-if="loaded">
+    <h1>Marslab dummy page</h1>
+    <ul class="list-group" v-for="day in days">
+      <li class="list-group-item">{{ day }}</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const getDaysOfWeekUrl = "/GetDaysOfWeek"
+
+  new Vue({
+    el: '#contents',
+    data() {
+      return {
+        loaded: false,
+        days: [],
+      }
+    },
+    mounted () {
+      fetch(getDaysOfWeekUrl)
+              .then(response => {
+                return response.json();
+              })
+              .then(days => {
+                this.days = days;
+              })
+      this.loaded = true
+    }
+  });
+
+</script>
+
+</body>
+</html>
